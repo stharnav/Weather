@@ -1,10 +1,21 @@
 package com.example.weatherapp;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
+
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,20 +30,28 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import androidx.appcompat.widget.SearchView;
+import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity {
     private ImageView weatherIcon;
     private TextView temperature;
-    private TextView city;
+    private TextView cityName;
     private TextView weatherDescription;
     private TextView temperatureHighLow;
     private TextView feelsLike;
-    private RequestQueue requestQueue;;
+    private RequestQueue requestQueue;
+    private SearchView searchCity;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        temperature = findViewById(R.id.temperature);
+        feelsLike = findViewById(R.id.weatherFeel);
+        temperatureHighLow = findViewById(R.id.temperatureHighLow);
+        weatherDescription = findViewById(R.id.weatherDescription);
+        cityName = findViewById(R.id.city);
         requestQueue = Volley.newRequestQueue(this);
         fetchWeather("Kathmandu");
     }
@@ -48,15 +67,75 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         Log.d("api",response.toString());
 
+                        try {
+                            JSONObject main = response.getJSONObject("main");
+                            JSONObject coord = response.getJSONObject("coord");
+                            JSONObject weather = response.getJSONArray("weather").getJSONObject(0);
+
+                            double temp = main.getDouble("temp");
+                            double feel = main.getDouble("feels_like");
+                            double min = main.getDouble("temp_min");
+                            double max = main.getDouble("temp_max");
+
+                            String weatherDesc = weather.getString("description");
+
+                            String ct = response.getString("name");
+
+                            temperature.setText(String.format("%.1f°C",temp));
+                            feelsLike.setText(String.format("Feels like %.0f°C" ,feel));
+                            temperatureHighLow.setText(String.format("%.1f/ ", min) + String.format("%.1f°C", max));
+                            weatherDescription.setText(weatherDesc);
+                            cityName.setText(ct);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Toast.makeText(MainActivity.this, "Error Loading weather data", Toast.LENGTH_SHORT).show();
                     }
 
                 });
         requestQueue.add(request);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.top_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.search);
+
+        SearchView searchCity = (SearchView) searchItem.getActionView();
+        searchCity.setQueryHint("Search City");
+
+        searchCity.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Trigger search
+                Toast.makeText(MainActivity.this, "Search for city: " + query, Toast.LENGTH_SHORT).show();
+                fetchWeather(query);
+                hideKeyboard(MainActivity.this);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Handle live changes if needed
+                return false;
+            }
+        });
+        return true;
+    }
+
+    public void hideKeyboard(Activity activity) {
+        View view = activity.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
 }
