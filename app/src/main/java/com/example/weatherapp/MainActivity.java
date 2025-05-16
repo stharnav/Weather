@@ -42,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView feelsLike;
     private RequestQueue requestQueue;
     private SearchView searchCity;
+
+    private TextView visibility;
+    private TextView pressure;
+    private TextView humidity;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
         weatherDescription = findViewById(R.id.weatherDescription);
         cityName = findViewById(R.id.city);
         requestQueue = Volley.newRequestQueue(this);
+        visibility = findViewById(R.id.visibility);
+        pressure = findViewById(R.id.pressure);
+        humidity = findViewById(R.id.humidity);
         fetchWeather("Kathmandu");
     }
 
@@ -71,11 +78,14 @@ public class MainActivity extends AppCompatActivity {
                             JSONObject main = response.getJSONObject("main");
                             JSONObject coord = response.getJSONObject("coord");
                             JSONObject weather = response.getJSONArray("weather").getJSONObject(0);
+                            String visib = response.getString("visibility");
 
                             double temp = main.getDouble("temp");
                             double feel = main.getDouble("feels_like");
                             double min = main.getDouble("temp_min");
                             double max = main.getDouble("temp_max");
+                            double press = main.getDouble("pressure");
+                            double humid = main.getDouble("humidity");
 
                             String weatherDesc = weather.getString("description");
 
@@ -85,6 +95,9 @@ public class MainActivity extends AppCompatActivity {
                             feelsLike.setText(String.format("Feels like %.0f°C" ,feel));
                             temperatureHighLow.setText(String.format("%.1f/ ", min) + String.format("%.1f°C", max));
                             weatherDescription.setText(weatherDesc);
+                            visibility.setText(visib);
+                            pressure.setText(String.format("%.0f",press));
+                            humidity.setText(String.format("%.0f", humid));
                             cityName.setText(ct);
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
