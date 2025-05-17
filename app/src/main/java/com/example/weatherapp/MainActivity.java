@@ -46,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView visibility;
     private TextView pressure;
     private TextView humidity;
+    private TextView wind;
+    private TextView sunRise;
+    private TextView sunSet;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
         visibility = findViewById(R.id.visibility);
         pressure = findViewById(R.id.pressure);
         humidity = findViewById(R.id.humidity);
+//        wind.findViewById(R.id.wind);
+//        sunRise.findViewById(R.id.sunRise);
+//        sunSet.findViewById(R.id.sunSet);
         fetchWeather("Kathmandu");
     }
 
@@ -78,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
                             JSONObject main = response.getJSONObject("main");
                             JSONObject coord = response.getJSONObject("coord");
                             JSONObject weather = response.getJSONArray("weather").getJSONObject(0);
+                            JSONObject windData = response.getJSONObject("wind");
+                            JSONObject sys = response.getJSONObject("sys");
                             String visib = response.getString("visibility");
 
                             double temp = main.getDouble("temp");
@@ -86,6 +94,9 @@ public class MainActivity extends AppCompatActivity {
                             double max = main.getDouble("temp_max");
                             double press = main.getDouble("pressure");
                             double humid = main.getDouble("humidity");
+                            double winds = windData.getDouble("speed");
+                            double sunR = sys.getDouble("sunrise");
+                            double sunS = sys.getDouble("sunset");
 
                             String weatherDesc = weather.getString("description");
 
@@ -98,6 +109,9 @@ public class MainActivity extends AppCompatActivity {
                             visibility.setText(visib);
                             pressure.setText(String.format("%.0f",press));
                             humidity.setText(String.format("%.0f", humid));
+//                            wind.setText(String.format("%.01f", winds));
+//                            sunRise.setText(String.format("%.0f", sunR));
+//                            sunSet.setText(String.format("%.0f", sunS));
                             cityName.setText(ct);
                         } catch (JSONException e) {
                             throw new RuntimeException(e);

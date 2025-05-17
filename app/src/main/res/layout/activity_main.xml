@@ -106,22 +106,77 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:orientation="vertical">
-            
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/sunrise"
+                    android:layout_height="30dp">
+                </ImageView>
+                <TextView
+                    android:layout_width="200sp"
+                    android:layout_height="match_parent"
+                    android:textSize="20dp"
+                    android:text="Sun Rise">
+                </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:id="@+id/sunRise">
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/sunset"
+                    android:layout_height="30dp">
+                </ImageView>
+                <TextView
+                    android:layout_width="200sp"
+                    android:layout_height="match_parent"
+                    android:textSize="20dp"
+                    android:text="Sun set">
+                </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:id="@+id/sunSet">
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
                 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_marginRight="5dp"
+                    android:src="@drawable/national_park"
                     android:layout_height="30dp">
                 </ImageView>
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="200sp"
                     android:layout_height="match_parent"
                     android:textSize="20dp"
-                    android:gravity="center"
                     android:text="Visibility">
                 </TextView>
                 <TextView
@@ -136,18 +191,19 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_marginRight="5dp"
+                    android:src="@drawable/_682839_drop_forecast_humidity_precipitation_rain_icon"
                     android:layout_height="30dp">
                 </ImageView>
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="200sp"
                     android:layout_height="match_parent"
                     android:textSize="20dp"
-                    android:gravity="center"
                     android:text="Pressure">
                 </TextView>
                 <TextView
@@ -162,6 +218,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -171,10 +228,9 @@
                     android:layout_height="30dp">
                 </ImageView>
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="200sp"
                     android:layout_height="match_parent"
                     android:textSize="20dp"
-                    android:gravity="center"
                     android:text="Humidity">
                 </TextView>
                 <TextView
@@ -182,6 +238,33 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:id="@+id/humidity">
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/wind"
+                    android:layout_height="30dp">
+                </ImageView>
+                <TextView
+                    android:layout_width="200sp"
+                    android:layout_height="match_parent"
+                    android:textSize="20dp"
+                    android:text="Wind">
+                </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:id="@+id/wind">
                 </TextView>
 
             </LinearLayout>
