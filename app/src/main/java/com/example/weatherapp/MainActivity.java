@@ -27,6 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         wind = findViewById(R.id.wind);
         sunRise = findViewById(R.id.sunRise);
         sunSet = findViewById(R.id.sunSet);
+        weatherIcon = findViewById(R.id.weatherIcon);
         fetchWeather("Kathmandu");
     }
 
@@ -114,6 +116,9 @@ public class MainActivity extends AppCompatActivity {
                             sunRise.setText(convertUnixToTime(sunR));
                             sunSet.setText(convertUnixToTime(sunS));
                             cityName.setText(ct);
+
+                            String iconUrl = "https://openweathermap.org/img/wn/" + weather.getString("icon") +"@2x.png";
+                            Glide.with(MainActivity.this).load(iconUrl).into(weatherIcon);
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
