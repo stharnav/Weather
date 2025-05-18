@@ -63,14 +63,14 @@ public class MainActivity extends AppCompatActivity {
         visibility = findViewById(R.id.visibility);
         pressure = findViewById(R.id.pressure);
         humidity = findViewById(R.id.humidity);
-//        wind.findViewById(R.id.wind);
-//        sunRise.findViewById(R.id.sunRise);
-//        sunSet.findViewById(R.id.sunSet);
+        wind = findViewById(R.id.wind);
+        sunRise = findViewById(R.id.sunRise);
+        sunSet = findViewById(R.id.sunSet);
         fetchWeather("Kathmandu");
     }
 
     protected void fetchWeather(@Nullable String city){
-        String API_KEY = "978b2627174542f035cb91ce61ed936a";
+        String API_KEY = getString(R.string.weather_api_key);
         String URL ="https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid="+ API_KEY +"&units=metric";
 
         JsonObjectRequest request =  new JsonObjectRequest
@@ -86,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
                             JSONObject weather = response.getJSONArray("weather").getJSONObject(0);
                             JSONObject windData = response.getJSONObject("wind");
                             JSONObject sys = response.getJSONObject("sys");
-                            String visib = response.getString("visibility");
+                            double visib = response.getDouble("visibility");
+                            double visibilityInKm = visib/1000.0;
 
                             double temp = main.getDouble("temp");
                             double feel = main.getDouble("feels_like");
@@ -106,12 +107,12 @@ public class MainActivity extends AppCompatActivity {
                             feelsLike.setText(String.format("Feels like %.0f°C" ,feel));
                             temperatureHighLow.setText(String.format("%.1f/ ", min) + String.format("%.1f°C", max));
                             weatherDescription.setText(weatherDesc);
-                            visibility.setText(visib);
-                            pressure.setText(String.format("%.0f",press));
-                            humidity.setText(String.format("%.0f", humid));
-//                            wind.setText(String.format("%.01f", winds));
-//                            sunRise.setText(String.format("%.0f", sunR));
-//                            sunSet.setText(String.format("%.0f", sunS));
+                            visibility.setText(String.format("%.01f km", visibilityInKm));
+                            pressure.setText(String.format("%.0f hPa",press));
+                            humidity.setText(String.format("%.0f %%", humid));
+                            wind.setText(String.format("%.01f m/s", winds));
+                            sunRise.setText(convertUnixToTime(sunR));
+                            sunSet.setText(convertUnixToTime(sunS));
                             cityName.setText(ct);
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
@@ -163,6 +164,12 @@ public class MainActivity extends AppCompatActivity {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    private String convertUnixToTime(double unixTime) {
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("hh:mm a");
+        sdf.setTimeZone(java.util.TimeZone.getDefault());
+        return sdf.format(new java.util.Date((long)unixTime * 1000));
     }
 
 }

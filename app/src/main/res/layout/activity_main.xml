@@ -120,7 +120,7 @@
                     android:layout_height="30dp">
                 </ImageView>
                 <TextView
-                    android:layout_width="200sp"
+                    android:layout_width="280sp"
                     android:layout_height="match_parent"
                     android:textSize="20dp"
                     android:text="Sun Rise">
@@ -147,7 +147,7 @@
                     android:layout_height="30dp">
                 </ImageView>
                 <TextView
-                    android:layout_width="200sp"
+                    android:layout_width="280sp"
                     android:layout_height="match_parent"
                     android:textSize="20dp"
                     android:text="Sun set">
@@ -174,7 +174,7 @@
                     android:layout_height="30dp">
                 </ImageView>
                 <TextView
-                    android:layout_width="200sp"
+                    android:layout_width="280sp"
                     android:layout_height="match_parent"
                     android:textSize="20dp"
                     android:text="Visibility">
@@ -201,7 +201,7 @@
                     android:layout_height="30dp">
                 </ImageView>
                 <TextView
-                    android:layout_width="200sp"
+                    android:layout_width="280sp"
                     android:layout_height="match_parent"
                     android:textSize="20dp"
                     android:text="Pressure">
@@ -228,7 +228,7 @@
                     android:layout_height="30dp">
                 </ImageView>
                 <TextView
-                    android:layout_width="200sp"
+                    android:layout_width="280sp"
                     android:layout_height="match_parent"
                     android:textSize="20dp"
                     android:text="Humidity">
@@ -255,7 +255,7 @@
                     android:layout_height="30dp">
                 </ImageView>
                 <TextView
-                    android:layout_width="200sp"
+                    android:layout_width="280sp"
                     android:layout_height="match_parent"
                     android:textSize="20dp"
                     android:text="Wind">
